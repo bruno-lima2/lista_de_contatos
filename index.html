@@ -12,24 +12,29 @@
   </head>
   <body>
     <div class="campos">
-      <div class="campo_nome">
+      <div class="container_campo_nome">
         <label for="nome">Nome</label>
-        <input type="text" placeholder="Nome" class="form-control" />
+        <input type="text" placeholder="Digite seu nome completo" class="form-control campo_nome" />
       </div>
-      <div class="campo_email">
+      <div class="container_campo_email">
         <label for="email">Email</label>
-        <input type="text" placeholder="Email" class="form-control" />
+        <input
+          type="text"
+          placeholder="exemplo@dominio.com"
+          class="form-control campo_email"
+        />
       </div>
-      <div class="campo_celular">
+      <div class="container_campo_celular">
         <label for="celular">Celular</label>
         <input
           type="text"
           placeholder="(00) 0 0000-0000"
-          class="form-control"
+          class="form-control campo_celular"
         />
       </div>
     </div>
     <button class="btn btn-primary adicionar">ADICIONAR</button>
+    <div class="valores"></div>
     <script src="./script.js"></script>
   </body>
 </html>

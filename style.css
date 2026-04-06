@@ -11,9 +11,9 @@ body {
   flex-direction: column;
   gap: 1rem;
 }
-.campo_nome,
-.campo_email,
-.campo_celular {
+.container_campo_nome,
+.container_campo_email,
+.container_campo_celular {
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
@@ -21,4 +21,7 @@ body {
 .adicionar {
   font-weight: bold;
   align-self: end;
+}
+.feedback {
+    display: flex;
 }
