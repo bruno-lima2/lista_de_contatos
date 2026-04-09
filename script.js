@@ -14,55 +14,14 @@ function limparDados() {
   campoEmail.value = "";
   campoCelular.value = "";
 }
-function criarCampo() {
-  const campo = document.createElement("div");
-  campo.classList.add("campo");
-  campos.appendChild(campo);
-  const campoContainer = document.createElement("div");
-  campoContainer.classList.add("campo_container");
-  campo.appendChild(campoContainer);
-  criarCampoNome(campoContainer);
-  criarCampoEmail(campoContainer);
-  criarCampoCelular(campoContainer);
-  limparDados();
-  botaoRemover(campo);
-}
-function criarCampoNome(campoContainer) {
-  const containerNome = document.createElement("div");
-  containerNome.classList.add("campo_wrapper");
-  campoContainer.appendChild(containerNome);
-  const labelNome = document.createElement("span");
-  labelNome.textContent = "Nome: ";
-  labelNome.style.fontWeight = "bold";
-  containerNome.appendChild(labelNome);
-  const valorNome = document.createElement("span");
-  valorNome.textContent = campoNome.value;
-  containerNome.appendChild(valorNome);
-}
-function criarCampoEmail(campoContainer) {
-  const containerEmail = document.createElement("div");
-  containerEmail.classList.add("campo_wrapper");
-  campoContainer.appendChild(containerEmail);
-  const labelEmail = document.createElement("span");
-  labelEmail.textContent = "Email: ";
-  labelEmail.style.fontWeight = "bold";
-  containerEmail.appendChild(labelEmail);
-  const valorEmail = document.createElement("span");
-  valorEmail.textContent = campoEmail.value;
-  containerEmail.appendChild(valorEmail);
-}
-function criarCampoCelular(campoContainer) {
-  const containerCelular = document.createElement("div");
-  containerCelular.classList.add("campo_wrapper");
-  campoContainer.appendChild(containerCelular);
-  const labelCelular = document.createElement("span");
-  labelCelular.textContent = "Celular: ";
-  labelCelular.style.fontWeight = "bold";
-  containerCelular.appendChild(labelCelular);
-  const valorCelular = document.createElement("span");
-  valorCelular.textContent = campoCelular.value;
-  containerCelular.appendChild(valorCelular);
-}
+adicionar.addEventListener("click", () => {
+  if (campoNome.value && campoEmail.value && campoCelular.value) {
+    feedback.remove();
+    criarCampo();
+  } else {
+    feedbackErro();
+  }
+});
 function botaoRemover(campo) {
   const remover = document.createElement("button");
   remover.classList.add("btn", "btn-danger", "remover");
@@ -72,11 +31,29 @@ function botaoRemover(campo) {
     campo.remove();
   });
 }
-adicionar.addEventListener("click", () => {
-  if (campoNome.value && campoEmail.value && campoCelular.value) {
-    feedback.remove();
-    criarCampo();
-  } else {
-    feedbackErro();
-  }
-});
+
+function criarCampo() {
+  const campo = document.createElement("div");
+  campo.classList.add("campo");
+  campos.appendChild(campo);
+  const campoContainer = document.createElement("div");
+  campoContainer.classList.add("campo_container");
+  campo.appendChild(campoContainer);
+  criarCampoItem(campoContainer, "Nome", campoNome.value);
+  criarCampoItem(campoContainer, "Email", campoEmail.value);
+  criarCampoItem(campoContainer, "Celular", campoCelular.value);
+  limparDados();
+  botaoRemover(campo);
+}
+function criarCampoItem(campoContainer, label, valor) {
+  const container = document.createElement("div");
+  container.classList.add("campo_wrapper");
+  campoContainer.appendChild(container);
+  const labelItem = document.createElement("span");
+  labelItem.textContent = `${label}: `;
+  labelItem.style.fontWeight = "bold";
+  container.appendChild(labelItem);
+  const valorItem = document.createElement("span");
+  valorItem.textContent = valor;
+  container.appendChild(valorItem);
+}
