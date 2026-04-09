@@ -18,18 +18,18 @@ function criarCampo() {
   const campo = document.createElement("div");
   campo.classList.add("campo");
   campos.appendChild(campo);
-  const campoContainer = document.createElement("div")
-  campoContainer.classList.add("campo_container")
-  campo.appendChild(campoContainer)
+  const campoContainer = document.createElement("div");
+  campoContainer.classList.add("campo_container");
+  campo.appendChild(campoContainer);
   criarCampoNome(campoContainer);
   criarCampoEmail(campoContainer);
   criarCampoCelular(campoContainer);
   limparDados();
-  botaoRemover(campo)
+  botaoRemover(campo);
 }
 function criarCampoNome(campoContainer) {
   const containerNome = document.createElement("div");
-  containerNome.classList.add("campo_wrapper")
+  containerNome.classList.add("campo_wrapper");
   campoContainer.appendChild(containerNome);
   const labelNome = document.createElement("span");
   labelNome.textContent = "Nome: ";
@@ -41,7 +41,7 @@ function criarCampoNome(campoContainer) {
 }
 function criarCampoEmail(campoContainer) {
   const containerEmail = document.createElement("div");
-  containerEmail.classList.add("campo_wrapper")
+  containerEmail.classList.add("campo_wrapper");
   campoContainer.appendChild(containerEmail);
   const labelEmail = document.createElement("span");
   labelEmail.textContent = "Email: ";
@@ -53,7 +53,7 @@ function criarCampoEmail(campoContainer) {
 }
 function criarCampoCelular(campoContainer) {
   const containerCelular = document.createElement("div");
-  containerCelular.classList.add("campo_wrapper")
+  containerCelular.classList.add("campo_wrapper");
   campoContainer.appendChild(containerCelular);
   const labelCelular = document.createElement("span");
   labelCelular.textContent = "Celular: ";
@@ -64,13 +64,13 @@ function criarCampoCelular(campoContainer) {
   containerCelular.appendChild(valorCelular);
 }
 function botaoRemover(campo) {
-  const remover = document.createElement("button")
-  remover.classList.add("btn", "btn-danger", "remover")
-  remover.textContent = "X"
-  campo.appendChild(remover)
+  const remover = document.createElement("button");
+  remover.classList.add("btn", "btn-danger", "remover");
+  remover.textContent = "X";
+  campo.appendChild(remover);
   remover.addEventListener("click", () => {
-    campo.remove()
-  })
+    campo.remove();
+  });
 }
 adicionar.addEventListener("click", () => {
   if (campoNome.value && campoEmail.value && campoCelular.value) {
