@@ -40,7 +40,7 @@ input {
   background: #fff;
   box-shadow: 2.5px 2.5px 5px gray;
   display: flex;
-  justify-content: space-between;
+  justify-content: space-between
 }
 .remover {
   font-weight: bold;
