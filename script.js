@@ -46,12 +46,37 @@ function adicionarValores(container, campoLabel, campoValor) {
   valor.textContent = campoValor;
   wrapper.appendChild(valor);
 }
+function salvarDados() {
+  const usuario = {
+    nome: campoNome.value,
+    email: campoEmail.value,
+    celular: campoCelular.value,
+  };
+  localStorage.setItem("usuario", JSON.stringify(usuario));
+}
 adicionar.addEventListener("click", () => {
   if (campoNome.value && campoEmail.value && campoCelular.value) {
     feedback.remove();
     criarCampo();
+    salvarDados();
     limparDados();
   } else if (!campoNome.value || campoEmail.value || campoCelular.value) {
     feedbackErro();
   }
 });
+function carregarDados() {
+  const usuarios = JSON.parse(localStorage.getItem("usuario"));
+  if (usuarios) {
+    const campo = document.createElement("div");
+    campo.classList.add("campo");
+    campos.appendChild(campo);
+    const container = document.createElement("div");
+    container.classList.add("container");
+    campo.appendChild(container);
+    botaoRemover(campo);
+    adicionarValores(container, "Nome: ", usuarios.nome);
+    adicionarValores(container, "Email: ", usuarios.email);
+    adicionarValores(container, "Celular: ", usuarios.celular);
+  }
+}
+carregarDados();
