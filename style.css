@@ -1,21 +1,19 @@
 body {
-  background: #eee;
   max-width: 800px;
   margin: 2rem auto;
   padding: 0 1rem;
   display: flex;
   flex-direction: column;
   gap: 1rem;
+  background: #eee;
 }
-label {
+.label {
   margin-bottom: 0.5rem;
 }
-input {
+.nome,
+.email,
+.celular {
   box-shadow: 2.5px 2.5px 5px gray;
-}
-.feedback {
-  display: block;
-  min-height: 20px;
 }
 .adicionar {
   font-weight: bold;
@@ -35,7 +33,10 @@ input {
   justify-content: space-between;
 }
 .remover {
-  font-weight: bold;
   border-radius: 50%;
+  font-weight: bold;
   align-self: center;
+}
+.feedback {
+  display: flex;
 }

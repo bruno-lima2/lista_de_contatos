@@ -1,20 +1,15 @@
-const campoNome = document.querySelector(".campo_nome");
+const containerNome = document.querySelector(".container_nome");
 const nome = document.querySelector(".nome");
 const feedbackNome = document.createElement("div");
-const campoEmail = document.querySelector(".campo_email");
+const containerEmail = document.querySelector(".container_email");
 const email = document.querySelector(".email");
 const feedbackEmail = document.createElement("div");
-const campoCelular = document.querySelector(".campo_celular");
+const containerCelular = document.querySelector(".container_celular");
 const celular = document.querySelector(".celular");
 const feedbackCelular = document.createElement("div");
 const adicionar = document.querySelector(".adicionar");
 const campos = document.querySelector(".campos");
 let usuarios = JSON.parse(localStorage.getItem("usuarios")) || [];
-function limparValores() {
-  nome.value = "";
-  email.value = "";
-  celular.value = "";
-}
 function criarCampo() {
   const usuario = {
     nome: nome.value,
@@ -27,7 +22,8 @@ function criarCampo() {
   campo.classList.add("campo");
   campos.appendChild(campo);
   const container = document.createElement("div");
-  campo.appendChild(container);
+  container.classList.add("container");
+  campo.appendChild(container, usuario);
   botaoRemover(campo, usuario);
   adicionarValores(container, "Nome: ", nome.value);
   adicionarValores(container, "Email: ", email.value);
@@ -43,9 +39,9 @@ function botaoRemover(campo, usuario) {
     usuarios = usuarios.filter(
       (u) =>
         !(
-          u.nome === usuario.nome &&
-          u.email === usuario.email &&
-          u.celular === usuario.celular
+          usuario.nome === u.nome &&
+          usuario.email === u.email &&
+          usuario.celular === u.celular
         ),
     );
     salvarDados();
@@ -53,44 +49,78 @@ function botaoRemover(campo, usuario) {
 }
 function adicionarValores(container, label, valor) {
   const wrapper = document.createElement("div");
+  wrapper.classList.add("wrapper");
   container.appendChild(wrapper);
-  const labelAdicionado = document.createElement("span");
-  labelAdicionado.textContent = label;
-  labelAdicionado.style.fontWeight = "bold";
-  wrapper.appendChild(labelAdicionado);
-  const valorAdicionado = document.createElement("span");
-  valorAdicionado.textContent = valor;
-  wrapper.appendChild(valorAdicionado);
+  const labelCriado = document.createElement("span");
+  labelCriado.textContent = label;
+  labelCriado.style.fontWeight = "bold";
+  wrapper.appendChild(labelCriado);
+  const valorCriado = document.createElement("span");
+  valorCriado.textContent = valor;
+  wrapper.appendChild(valorCriado);
 }
+function salvarDados() {
+  localStorage.setItem("usuarios", JSON.stringify(usuarios));
+}
+function limparDados() {
+  ((nome.value = ""), (email.value = ""), (celular.value = ""));
+}
+function carregarDados() {
+  usuarios.forEach((usuario) => {
+    const campo = document.createElement("div");
+    campo.classList.add("campo");
+    campos.appendChild(campo);
+    const container = document.createElement("div");
+    container.classList.add("container");
+    campo.appendChild(container);
+    botaoRemover(campo, usuario);
+    adicionarValores(container, "Nome: ", usuario.nome);
+    adicionarValores(container, "Email: ", usuario.email);
+    adicionarValores(container, "Celular: ", usuario.celular);
+  });
+}
+carregarDados();
 function validacaoNome() {
-  if (nome.value.trim().length < 3) {
-    feedbackNome.textContent = "O nome é inválido";
-    feedbackNome.classList.add("invalid-feedback", "feedback");
-    campoNome.appendChild(feedbackNome);
-    return false;
-  } else {
+  if (nome.value.length > 2) {
     feedbackNome.remove();
     return true;
+  } else {
+    feedbackNome.textContent = "O nome é inválido";
+    feedbackNome.classList.add("invalid-feedback", "feedback");
+    containerNome.appendChild(feedbackNome);
+    return false;
   }
 }
 nome.addEventListener("blur", validacaoNome);
 function validacaoEmail() {
   const regexEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-  if (!regexEmail.test(email.value)) {
-    feedbackEmail.textContent = "O email é inválido";
-    feedbackEmail.classList.add("invalid-feedback", "feedback");
-    campoEmail.appendChild(feedbackEmail);
-    return false;
-  } else {
+  if (regexEmail.test(email.value)) {
     feedbackEmail.remove();
     return true;
+  } else {
+    feedbackEmail.textContent = "O email é inválido";
+    feedbackEmail.classList.add("invalid-feedback", "feedback");
+    containerEmail.appendChild(feedbackEmail);
+    return false;
   }
 }
 email.addEventListener("blur", validacaoEmail);
+function validacaoCelular() {
+  if (celular.value.replace(/\D/g, "").length === 11) {
+    feedbackCelular.remove();
+    return true;
+  } else {
+    feedbackCelular.textContent = "O número de celular é inválido";
+    feedbackCelular.classList.add("invalid-feedback", "feedback");
+    containerCelular.appendChild(feedbackCelular);
+    return false;
+  }
+}
+celular.addEventListener("blur", validacaoCelular);
 function mascaraCelular() {
   celular.addEventListener("input", () => {
     celular.value = celular.value.replace(/\D/g, "").slice(0, 11);
-    let valor = celular.value.replace(/\D/g, "").slice(0, 11);
+    let valor = celular.value;
     let numeros = valor;
     if (valor.length > 0) {
       numeros = `(${valor.slice(0, 2)}`;
@@ -108,43 +138,12 @@ function mascaraCelular() {
   });
 }
 mascaraCelular();
-function validacaoCelular() {
-  if (celular.value.replace(/\D/g, "").length !== 11) {
-    feedbackCelular.textContent = "O número de celular é inválido";
-    feedbackCelular.classList.add("invalid-feedback", "feedback");
-    campoCelular.appendChild(feedbackCelular);
-    return false;
-  } else {
-    feedbackCelular.remove();
-    return true;
-  }
-}
-celular.addEventListener("blur", validacaoCelular);
-function salvarDados() {
-  localStorage.setItem("usuarios", JSON.stringify(usuarios));
-}
-function carregarDados() {
-  usuarios.forEach((usuario) => {
-    const campo = document.createElement("div");
-    campo.classList.add("campo");
-    campos.appendChild(campo);
-    const container = document.createElement("div");
-    campo.appendChild(container);
-    botaoRemover(campo, usuario);
-    adicionarValores(container, "Nome: ", usuario.nome);
-    adicionarValores(container, "Email: ", usuario.email);
-    adicionarValores(container, "Celular: ", usuario.celular);
-  });
-}
-carregarDados();
 adicionar.addEventListener("click", () => {
   const nomeOk = validacaoNome();
   const emailOk = validacaoEmail();
   const celularOk = validacaoCelular();
   if (nomeOk && emailOk && celularOk) {
-    feedbackEmail.remove();
-    feedbackCelular.remove();
     criarCampo();
-    limparValores();
+    limparDados();
   }
 });
