@@ -21,19 +21,22 @@ function criarCampo() {
   const campo = document.createElement("div");
   campo.classList.add("campo");
   campos.appendChild(campo);
-  const container = document.createElement("div");
-  container.classList.add("container");
-  campo.appendChild(container, usuario);
-  botaoRemover(campo, usuario);
-  adicionarValores(container, "Nome: ", nome.value);
-  adicionarValores(container, "Email: ", email.value);
-  adicionarValores(container, "Celular: ", celular.value);
+  const containerLeft = document.createElement("div");
+  campo.appendChild(containerLeft);
+  const containerRight = document.createElement("div");
+  containerRight.classList.add("container_right");
+  campo.appendChild(containerRight);
+  botaoEditar(containerRight, campo, usuario);
+  botaoRemover(campo, containerRight, usuario);
+  adicionarValores(containerLeft, "Nome: ", nome.value);
+  adicionarValores(containerLeft, "Email: ", email.value);
+  adicionarValores(containerLeft, "Celular: ", celular.value);
 }
-function botaoRemover(campo, usuario) {
+function botaoRemover(campo, containerRight, usuario) {
   const remover = document.createElement("button");
   remover.classList.add("btn", "btn-danger", "remover");
   remover.textContent = "X";
-  campo.appendChild(remover);
+  containerRight.appendChild(remover);
   remover.addEventListener("click", () => {
     campo.remove();
     usuarios = usuarios.filter(
@@ -47,10 +50,9 @@ function botaoRemover(campo, usuario) {
     salvarDados();
   });
 }
-function adicionarValores(container, label, valor) {
+function adicionarValores(containerLeft, label, valor) {
   const wrapper = document.createElement("div");
-  wrapper.classList.add("wrapper");
-  container.appendChild(wrapper);
+  containerLeft.appendChild(wrapper);
   const labelCriado = document.createElement("span");
   labelCriado.textContent = label;
   labelCriado.style.fontWeight = "bold";
@@ -70,13 +72,16 @@ function carregarDados() {
     const campo = document.createElement("div");
     campo.classList.add("campo");
     campos.appendChild(campo);
-    const container = document.createElement("div");
-    container.classList.add("container");
-    campo.appendChild(container);
-    botaoRemover(campo, usuario);
-    adicionarValores(container, "Nome: ", usuario.nome);
-    adicionarValores(container, "Email: ", usuario.email);
-    adicionarValores(container, "Celular: ", usuario.celular);
+    const containerLeft = document.createElement("div");
+    campo.appendChild(containerLeft);
+    const containerRight = document.createElement("div");
+    containerRight.classList.add("container_right");
+    campo.appendChild(containerRight);
+    botaoEditar(containerRight, campo, usuario);
+    botaoRemover(campo, containerRight, usuario);
+    adicionarValores(containerLeft, "Nome: ", usuario.nome);
+    adicionarValores(containerLeft, "Email: ", usuario.email);
+    adicionarValores(containerLeft, "Celular: ", usuario.celular);
   });
 }
 carregarDados();
@@ -138,6 +143,69 @@ function mascaraCelular() {
   });
 }
 mascaraCelular();
+function botaoEditar(containerRight, campo, usuario) {
+  const editar = document.createElement("button");
+  editar.classList.add("btn", "btn-warning", "editar");
+  editar.textContent = "EDITAR";
+  containerRight.appendChild(editar);
+  editar.addEventListener("click", () => {
+    limparCampo(campo);
+    editarCampo(campo, usuario);
+  });
+}
+function limparCampo(campo) {
+  campo.innerHTML = "";
+}
+function editarCampo(campo, usuario) {
+  const nome = document.createElement("input");
+  nome.classList.add("form-control");
+  nome.value = usuario.nome;
+  const email = document.createElement("input");
+  email.classList.add("form-control");
+  email.value = usuario.email;
+  const celular = document.createElement("input");
+  celular.classList.add("form-control");
+  celular.value = usuario.celular;
+  campo.appendChild(nome);
+  campo.appendChild(email);
+  campo.appendChild(celular);
+  const containerRight = document.createElement("div");
+  containerRight.classList.add("container_right");
+  campo.appendChild(containerRight);
+  botaoSalvar(containerRight);
+  botaoCancelar(containerRight, campo, usuario);
+}
+function botaoSalvar(containerRight) {
+  const salvar = document.createElement("button");
+  salvar.classList.add("btn", "btn-success", "salvar");
+  salvar.textContent = "SALVAR";
+  containerRight.appendChild(salvar);
+}
+function botaoCancelar(containerRight, campo, usuario) {
+  const cancelar = document.createElement("button");
+  cancelar.classList.add("btn", "btn-secondary", "cancelar");
+  cancelar.textContent = "CANCELAR";
+  containerRight.appendChild(cancelar);
+  cancelar.addEventListener("click", () => {
+    campo.remove();
+    recriarCampo(usuario);
+  });
+}
+function recriarCampo(usuario) {
+  const campo = document.createElement("div");
+  campo.classList.add("campo");
+  campos.appendChild(campo);
+  const containerLeft = document.createElement("div");
+  campo.appendChild(containerLeft);
+  const containerRight = document.createElement("div");
+  containerRight.classList.add("container_right");
+  campo.appendChild(containerRight);
+  botaoEditar(containerRight, campo, usuario);
+  botaoRemover(campo, containerRight, usuario);
+  adicionarValores(containerLeft, "Nome: ", usuario.nome);
+  adicionarValores(containerLeft, "Email: ", usuario.email);
+  adicionarValores(containerLeft, "Celular: ", usuario.celular);
+}
 adicionar.addEventListener("click", () => {
   const nomeOk = validacaoNome();
   const emailOk = validacaoEmail();

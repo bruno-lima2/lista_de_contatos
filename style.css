@@ -31,9 +31,26 @@ body {
   padding: 1rem;
   display: flex;
   justify-content: space-between;
+  gap: 1rem;
+}
+.container_right {
+  display: flex;
+  gap: 1rem;
 }
 .remover {
   border-radius: 50%;
+  font-weight: bold;
+  align-self: center;
+}
+.editar {
+  font-weight: bold;
+  align-self: center;
+}
+.salvar {
+  font-weight: bold;
+  align-self: center;
+}
+.cancelar {
   font-weight: bold;
   align-self: center;
 }
