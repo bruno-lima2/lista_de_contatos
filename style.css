@@ -57,3 +57,21 @@ body {
 .feedback {
   display: flex;
 }
+.labelSpan {
+  font-weight: bold;
+}
+.valorDiv {
+  display: none;
+}
+@media (max-width: 768px) {
+  .valorDiv {
+    display: block;
+  }
+  .valorSpan {
+    display: none;
+  }
+  .campo {
+    flex-direction: column;
+    align-items: center;
+  }
+}
